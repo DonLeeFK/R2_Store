@@ -1,0 +1,5 @@
+# Ignore all hidden files and directories
+.DS_Store
+.wrangler/
+node_modules/
+!.git

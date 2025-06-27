@@ -1,0 +1,8 @@
+name = "r2-store"
+main = "r2_store.js"
+compatibility_date = "2024-06-01"
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "r2store"
+preview_bucket_name = "my-bucket"
