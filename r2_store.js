@@ -125,7 +125,7 @@ export default {
               <a href="${url.origin}/${file.key}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" target="_blank">
                 <span style="font-weight:500;">${file.key}</span>
               </a>
-              <form method="post" style="display:none;" class="delete-form" onsubmit="return confirm('Delete this file?');">
+              <form method="post" class="delete-form" onsubmit="return confirm('Delete this file?');">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="key" value="${file.key}">
                 ${env.TOKEN ? `<input type="hidden" name="token" value="${env.TOKEN}">` : ''}
@@ -251,14 +251,15 @@ export default {
               }
               .file-item {
                 position: relative;
+                padding-right: 2.5em;
               }
               .delete-form {
                 position: absolute;
                 right: 0.5em;
                 top: 50%;
                 transform: translateY(-50%);
-                display: none;
                 margin: 0;
+                display: inline-block;
               }
               .delete-btn {
                 background: #ef4444;
@@ -275,12 +276,6 @@ export default {
               .delete-btn:hover {
                 background: #b91c1c;
                 opacity: 1;
-              }
-              .file-item:hover .delete-form {
-                display: inline-block;
-              }
-              .file-item:hover {
-                padding-right: 2.5em;
               }
             </style>
           </head>
@@ -341,3 +336,4 @@ export default {
     return new Response(file.body, { headers });
   },
 };
+    
