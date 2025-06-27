@@ -234,7 +234,7 @@ export default {
           </head>
           <body>
             <div class="container">
-              <h1>📁 R2 File Storage</h1>
+              <h1>R2 File Storage</h1>
               ${uploadForm}
               <h2>Stored Files</h2>
               <ul>${fileList}</ul>
