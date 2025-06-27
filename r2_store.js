@@ -342,7 +342,8 @@ export default {
     }
 
     // Handle file access
-    const fileName = path.slice(1);
+    // Use decodeURIComponent to support spaces and special characters in file names
+    const fileName = decodeURIComponent(path.slice(1));
     if (env.TOKEN) {
       const tokenError = verifyToken();
       if (tokenError) return tokenError;
