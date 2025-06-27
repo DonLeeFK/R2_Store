@@ -262,20 +262,23 @@ export default {
                 display: inline-block;
               }
               .delete-btn {
-                background: #ef4444;
-                color: #fff;
+                background: none;
+                color: #ef4444;
                 border: none;
                 border-radius: 50%;
                 width: 1.8em;
                 height: 1.8em;
-                font-size: 1.2em;
+                font-size: 1.4em;
                 cursor: pointer;
                 opacity: 0.85;
-                transition: background 0.2s, opacity 0.2s;
+                transition: color 0.2s, opacity 0.2s;
+                line-height: 1;
+                padding: 0;
               }
               .delete-btn:hover {
-                background: #b91c1c;
+                color: #b91c1c;
                 opacity: 1;
+                background: none;
               }
             </style>
           </head>
@@ -336,4 +339,3 @@ export default {
     return new Response(file.body, { headers });
   },
 };
-    
