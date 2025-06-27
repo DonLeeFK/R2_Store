@@ -1,0 +1,16 @@
+{
+  "name": "r2-cloudflare-worker",
+  "version": "1.0.0",
+  "description": "A simple Cloudflare Worker for R2 file storage with token protection.",
+  "main": "r2_store.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "npm run build && vite preview",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "author": "DonLeeFK",
+  "license": "MIT"
+  
+}
