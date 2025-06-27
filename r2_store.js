@@ -66,7 +66,7 @@ export default {
             </head>
             <body>
               <div class="container">
-                <h1>🔒 Enter Token</h1>
+                <h1>Enter Token</h1>
                 <form method="GET">
                   <input type="text" name="token" placeholder="Token" required>
                   <br>
