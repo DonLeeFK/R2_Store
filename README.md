@@ -19,7 +19,10 @@ A Cloudflare Worker that provides a web interface for uploading and downloading 
 ## Deployment
 
 1. Clone this repository
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/DonLeeFK/R2_Store)
+2. [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/DonLeeFK/R2_Store)
+3. Create a R2 Object Storage space, add it the the environment variable R2.
+4. Create a access token via environment variable TOKEN.(optional)
+5. Redeploy.
 
 ## Usage
 
