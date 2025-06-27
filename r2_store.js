@@ -135,13 +135,32 @@ export default {
           ).join('')
         : '<li style="color:#888;">No files uploaded yet.</li>';
 
-      const uploadForm = `
-        <form method="post" enctype="multipart/form-data" class="upload-form">
-          <input type="file" name="file" required>
-          ${env.TOKEN ? '<input type="text" name="token" placeholder="Token" required>' : ''}
-          <button type="submit">Upload</button>
-        </form>
-      `;
+      // Only show token input if token is required and not already provided
+      let uploadForm;
+      if (env.TOKEN && !token) {
+        uploadForm = `
+          <form method="post" enctype="multipart/form-data" class="upload-form">
+            <input type="file" name="file" required>
+            <input type="text" name="token" placeholder="Token" required>
+            <button type="submit">Upload</button>
+          </form>
+        `;
+      } else if (env.TOKEN && token) {
+        uploadForm = `
+          <form method="post" enctype="multipart/form-data" class="upload-form">
+            <input type="file" name="file" required>
+            <input type="hidden" name="token" value="${token}">
+            <button type="submit">Upload</button>
+          </form>
+        `;
+      } else {
+        uploadForm = `
+          <form method="post" enctype="multipart/form-data" class="upload-form">
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+          </form>
+        `;
+      }
 
       const html = `
         <!DOCTYPE html>
