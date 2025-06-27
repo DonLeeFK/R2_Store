@@ -32,6 +32,7 @@ A Cloudflare Worker that provides a web interface for uploading and downloading 
 - If token is configured:
   - First access will prompt for token
   - Include token in upload requests
+you can also access your file visa `https://your_worker.workers.dev/file_name?token=TOKEN`
 
 ## Screenshots
 
