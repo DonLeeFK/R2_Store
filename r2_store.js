@@ -88,8 +88,21 @@ export default {
       }
 
       if (request.method === 'POST') {
-        // Handle file upload
+        // Handle file upload or delete
         const formData = await request.formData();
+        const action = formData.get('action');
+        if (action === 'delete') {
+          // Handle file deletion
+          const key = formData.get('key');
+          const deleteToken = formData.get('token');
+          if (env.TOKEN && env.TOKEN !== deleteToken) {
+            return new Response('Unauthorized', { status: 401 });
+          }
+          if (!key) return new Response('No file specified', { status: 400 });
+          await env.R2.delete(key);
+          return Response.redirect(url.origin + (token ? `?token=${token}` : ''));
+        }
+
         const file = formData.get('file');
         const uploadToken = formData.get('token');
 
@@ -108,10 +121,16 @@ export default {
       const files = await env.R2.list();
       const fileList = files.objects.length
         ? files.objects.map(file => 
-            `<li>
+            `<li class="file-item" data-key="${file.key}">
               <a href="${url.origin}/${file.key}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" target="_blank">
                 <span style="font-weight:500;">${file.key}</span>
               </a>
+              <form method="post" style="display:none;" class="delete-form" onsubmit="return confirm('Delete this file?');">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="key" value="${file.key}">
+                ${env.TOKEN ? `<input type="hidden" name="token" value="${env.TOKEN}">` : ''}
+                <button type="submit" class="delete-btn" title="Delete ${file.key}">&times;</button>
+              </form>
             </li>`
           ).join('')
         : '<li style="color:#888;">No files uploaded yet.</li>';
@@ -230,6 +249,39 @@ export default {
                 fill: currentColor;
                 margin-right: 0.2em;
               }
+              .file-item {
+                position: relative;
+              }
+              .delete-form {
+                position: absolute;
+                right: 0.5em;
+                top: 50%;
+                transform: translateY(-50%);
+                display: none;
+                margin: 0;
+              }
+              .delete-btn {
+                background: #ef4444;
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 1.8em;
+                height: 1.8em;
+                font-size: 1.2em;
+                cursor: pointer;
+                opacity: 0.85;
+                transition: background 0.2s, opacity 0.2s;
+              }
+              .delete-btn:hover {
+                background: #b91c1c;
+                opacity: 1;
+              }
+              .file-item:hover .delete-form {
+                display: inline-block;
+              }
+              .file-item:hover {
+                padding-right: 2.5em;
+              }
             </style>
           </head>
           <body>
@@ -253,6 +305,16 @@ export default {
                 DonLeeFK
               </a>
             </div>
+            <script>
+              // Prevent click on delete button from opening the file link
+              document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('.file-item .delete-form').forEach(function(form) {
+                  form.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                  });
+                });
+              });
+            </script>
           </body>
         </html>
       `;
