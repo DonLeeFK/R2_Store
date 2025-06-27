@@ -19,7 +19,7 @@ A Cloudflare Worker that provides a web interface for uploading and downloading 
 ## Deployment
 
 1. Clone this repository
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=<your git repo URL>)
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/DonLeeFK/R2_Store)
 
 ## Usage
 
