@@ -127,7 +127,7 @@ export default {
               <a href="${url.origin}/${file.key}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" target="_blank">
                 <span style="font-weight:500;">${file.key}</span>
               </a>
-              <form method="post" class="delete-form" onsubmit="return confirm('Delete this file?');">
+              <form method="post" class="delete-form" onsubmit="return confirm('Delete${encodeURIComponent(file.key)}?');">
                 <!-- Download button (left side) -->
                 <a href="${url.origin}/${encodeURIComponent(file.key)}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" download title="Download ${file.key}" class="download-btn" onclick="event.stopPropagation();">
                   <svg viewBox="0 0 20 20" fill="none" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
@@ -138,7 +138,7 @@ export default {
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="key" value="${file.key}">
                 ${env.TOKEN ? `<input type="hidden" name="token" value="${env.TOKEN}">` : ''}
-                <button type="submit" class="delete-btn" title="Delete ${file.key}">&times;</button>
+                <button type="submit" class="delete-btn" title="Delete ${file.key}" style="vertical-align:middle;">&times;</button>
               </form>
             </li>`
           ).join('')
