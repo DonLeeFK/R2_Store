@@ -22,6 +22,7 @@ export default {
           <html>
             <head>
               <title>Token Verification</title>
+              <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <link rel="icon" type="image/svg+xml" href="/favicon.svg">
               <style>
@@ -67,7 +68,7 @@ export default {
             </head>
             <body>
               <div class="container">
-                <h1>Enter Token</h1>
+                <h1>🔐 Enter Token</h1>
                 <form method="GET">
                   <input type="text" name="token" placeholder="Token" required>
                   <br>
@@ -127,6 +128,13 @@ export default {
                 <span style="font-weight:500;">${file.key}</span>
               </a>
               <form method="post" class="delete-form" onsubmit="return confirm('Delete this file?');">
+                <!-- Download button (left side) -->
+                <a href="${url.origin}/${encodeURIComponent(file.key)}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" download title="Download ${file.key}" class="download-btn" onclick="event.stopPropagation();">
+                  <svg viewBox="0 0 20 20" fill="none" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+                    <path d="M10 3v10m0 0l-4-4m4 4l4-4" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="4" y="17" width="12" height="2" rx="1" fill="#2563eb"/>
+                  </svg>
+                </a>
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="key" value="${file.key}">
                 ${env.TOKEN ? `<input type="hidden" name="token" value="${env.TOKEN}">` : ''}
@@ -168,6 +176,7 @@ export default {
         <html>
           <head>
             <title>R2 File Storage</title>
+            <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="icon" type="image/svg+xml" href="/favicon.svg">
             <style>
@@ -280,7 +289,29 @@ export default {
                 top: 50%;
                 transform: translateY(-50%);
                 margin: 0;
-                display: inline-block;
+                display: flex;
+                align-items: center;
+                gap: 0.2em;
+              }
+              .download-btn {
+                background: none;
+                border: none;
+                padding: 0;
+                margin-right: 0.2em;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                opacity: 0.85;
+                transition: opacity 0.2s;
+                text-decoration: none;
+              }
+              .download-btn:hover svg path,
+              .download-btn:focus svg path {
+                stroke: #1e40af;
+              }
+              .download-btn:hover,
+              .download-btn:focus {
+                opacity: 1;
               }
               .delete-btn {
                 background: none;
@@ -305,7 +336,7 @@ export default {
           </head>
           <body>
             <div class="container">
-              <h1>R2 File Storage</h1>
+              <h1>📁 R2 File Storage</h1>
               ${uploadForm}
               <h2>Stored Files</h2>
               <ul>${fileList}</ul>
