@@ -1,4 +1,4 @@
-name = "r2-store"
+name = "r2store"
 main = "r2_store.js"
 compatibility_date = "2024-06-01"
 
