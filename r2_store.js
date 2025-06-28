@@ -168,6 +168,7 @@ export default {
           <head>
             <title>R2 File Storage</title>
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="icon" type="image/svg+xml" href="/favicon.svg">
             <style>
               body {
                 font-family: 'Segoe UI', Arial, sans-serif;
@@ -338,6 +339,20 @@ export default {
 
       return new Response(html, {
         headers: { 'Content-Type': 'text/html' },
+      });
+    }
+
+    // Serve favicon.svg
+    if (path === '/favicon.svg') {
+      const svg = `<?xml version="1.0" encoding="utf-8"?>
+<!-- License: CC Attribution. Made by Amir Baqian: https://dribbble.com/amirbaqian -->
+<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 4C15.5488 4 18.4665 6.52713 18.8086 9.76241C20.6853 10.5776 22 12.4665 22 14.6667C22 17.6122 19.6436 20 16.7368 20L6.73684 20C4.12076 20 2 17.851 2 15.2C2 13.1078 3.32099 11.3282 5.16392 10.671C5.15992 10.5811 5.15789 10.4908 5.15789 10.4C5.15789 6.86538 8.22121 4 12 4Z" stroke="#0095FF" stroke-width="1.5"/>
+<path d="M12 4C8.22121 4 5.15789 6.86538 5.15789 10.4C5.15789 10.4908 5.15992 10.5811 5.16392 10.671C3.32099 11.3282 2 13.1078 2 15.2C2 17.851 4.12076 20 6.73684 20L16.7368 20C19.6436 20 22 17.6122 22 14.6667" stroke="#363853" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
+`;
+      return new Response(svg, {
+        headers: { 'Content-Type': 'image/svg+xml' },
       });
     }
 
