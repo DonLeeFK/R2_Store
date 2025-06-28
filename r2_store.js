@@ -23,6 +23,7 @@ export default {
             <head>
               <title>Token Verification</title>
               <meta name="viewport" content="width=device-width, initial-scale=1">
+              <link rel="icon" type="image/svg+xml" href="/favicon.svg">
               <style>
                 body {
                   font-family: 'Segoe UI', Arial, sans-serif;
