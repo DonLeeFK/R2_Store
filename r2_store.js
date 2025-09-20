@@ -15,6 +15,21 @@ export default {
 
     // Handle root path
     if (path === '/') {
+      // Serve file if filename param is present
+      const filenameParam = url.searchParams.get('filename');
+      if (filenameParam) {
+        if (env.TOKEN) {
+          const tokenError = verifyToken();
+          if (tokenError) return tokenError;
+        }
+        const file = await env.R2.get(filenameParam);
+        if (!file) return new Response('File not found', { status: 404 });
+        const headers = new Headers();
+        file.writeHttpMetadata(headers);
+        headers.set('etag', file.httpEtag);
+        return new Response(file.body, { headers });
+      }
+
       // If token is required but not provided, show verification page
       if (env.TOKEN && !token) {
         const html = `
