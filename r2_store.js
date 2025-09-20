@@ -122,26 +122,34 @@ export default {
       // List files and show upload form
       const files = await env.R2.list();
       const fileList = files.objects.length
-        ? files.objects.map(file => 
-            `<li class="file-item" data-key="${file.key}">
-              <a href="${url.origin}/${file.key}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" target="_blank">
-                <span style="font-weight:500;">${file.key}</span>
-              </a>
-              <form method="post" class="delete-form" onsubmit="return confirm('Delete ${encodeURIComponent(file.key)}?');">
-                <!-- Download button (left side) -->
-                <a href="${url.origin}/${encodeURIComponent(file.key)}${env.TOKEN ? `?token=${env.TOKEN}` : ''}" download title="Download ${file.key}" class="download-btn" onclick="event.stopPropagation();">
-                  <svg viewBox="0 0 20 20" fill="none" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
-                    <path d="M10 3v10m0 0l-4-4m4 4l4-4" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <rect x="4" y="17" width="12" height="2" rx="1" fill="#2563eb"/>
-                  </svg>
+        ? files.objects.map(file => {
+            // Build query string for links
+            let queryStr = '';
+            if (env.TOKEN) {
+              queryStr = `?token=${env.TOKEN}&filename=${encodeURIComponent(file.key)}`;
+            } else {
+              queryStr = `?filename=${encodeURIComponent(file.key)}`;
+            }
+            return `
+              <li class="file-item" data-key="${file.key}">
+                <a href="${url.origin}/${queryStr}" target="_blank">
+                  <span style="font-weight:500;">${file.key}</span>
                 </a>
-                <input type="hidden" name="action" value="delete">
-                <input type="hidden" name="key" value="${file.key}">
-                ${env.TOKEN ? `<input type="hidden" name="token" value="${env.TOKEN}">` : ''}
-                <button type="submit" class="delete-btn" title="Delete ${file.key}" style="vertical-align:middle;">&times;</button>
-              </form>
-            </li>`
-          ).join('')
+                <form method="post" class="delete-form" onsubmit="return confirm('Delete ${encodeURIComponent(file.key)}?');">
+                  <!-- Download button (left side) -->
+                  <a href="${url.origin}/${queryStr}" download title="Download ${file.key}" class="download-btn" onclick="event.stopPropagation();">
+                    <svg viewBox="0 0 20 20" fill="none" width="22" height="22" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;">
+                      <path d="M10 3v10m0 0l-4-4m4 4l4-4" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      <rect x="4" y="17" width="12" height="2" rx="1" fill="#2563eb"/>
+                    </svg>
+                  </a>
+                  <input type="hidden" name="action" value="delete">
+                  <input type="hidden" name="key" value="${file.key}">
+                  ${env.TOKEN ? `<input type="hidden" name="token" value="${env.TOKEN}">` : ''}
+                  <button type="submit" class="delete-btn" title="Delete ${file.key}" style="vertical-align:middle;">&times;</button>
+                </form>
+              </li>`;
+          }).join('')
         : '<li style="color:#888;">No files uploaded yet.</li>';
 
       // Only show token input if token is required and not already provided
